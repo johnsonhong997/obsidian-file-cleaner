@@ -18,18 +18,20 @@ export default class CleanerPlugin extends Plugin {
 
 			// 筛选出需要删除的文件
 			var cleanFiles: TFile[] = [];
-			for (let i = 0; i < files.length; i++) {
-				if (files[i].stat.size === 0) {
-					cleanFiles.push(files[i]);
+			for (let file of files) {
+				if (file.stat.size === 0) {
+					cleanFiles.push(file);
 				}
 			}
 
 			// 执行删除
 			var len = cleanFiles.length;
 			if (len > 0) {
-				for (let i = 0; i < cleanFiles.length; i++) {
-					console.log(cleanFiles[i].name + " deleted");
-					this.app.vault.delete(cleanFiles[i]);
+				for (let file of cleanFiles) {
+					console.log(file.name + " deleted");
+					(async () => {
+						await this.app.vault.delete(file);
+					})();
 				}
 				new Notice("Cleanup successful");
 			} else {
