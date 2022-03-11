@@ -14,6 +14,7 @@ import {
 	DEFAULT_SETTINGS,
 	FileCleanerSettingTab,
 } from "./settings";
+import { getEmptyMdFiles, getUnusedAttachments } from "./util";
 import { t } from "./translations/helper";
 
 export default class FileCleanerPlugin extends Plugin {
@@ -24,18 +25,12 @@ export default class FileCleanerPlugin extends Plugin {
 		await this.loadSettings();
 
 		this.addRibbonIcon("trash", "File Cleaner", async () => {
-			// 获取文件列表
-			const files = this.app.vault.getMarkdownFiles();
+			// 获取清理文件
+			let emptyMdFiles = getEmptyMdFiles(this.app);
+			let unusedAttachments = getUnusedAttachments(this.app);
+			let cleanFiles: TFile[] = [...emptyMdFiles, ...unusedAttachments];
 
-			// 筛选出需要删除的文件
-			let cleanFiles: TFile[] = [];
-			for (let file of files) {
-				if (file.stat.size === 0) {
-					cleanFiles.push(file);
-				}
-			}
-
-			// 执行删除
+			// 执行清理
 			let len = cleanFiles.length;
 			if (len > 0) {
 				let destination = this.settings.destination;
