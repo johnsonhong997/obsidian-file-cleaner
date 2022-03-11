@@ -22,12 +22,12 @@ export default class FileCleanerPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-		this.addRibbonIcon("dice", "File Cleaner", async () => {
+		this.addRibbonIcon("trash", "File Cleaner", async () => {
 			// 获取文件列表
 			const files = this.app.vault.getMarkdownFiles();
 
 			// 筛选出需要删除的文件
-			var cleanFiles: TFile[] = [];
+			let cleanFiles: TFile[] = [];
 			for (let file of files) {
 				if (file.stat.size === 0) {
 					cleanFiles.push(file);
@@ -35,9 +35,9 @@ export default class FileCleanerPlugin extends Plugin {
 			}
 
 			// 执行删除
-			var len = cleanFiles.length;
+			let len = cleanFiles.length;
 			if (len > 0) {
-				var destination = this.settings.destination;
+				let destination = this.settings.destination;
 				for (let file of cleanFiles) {
 					console.log(file.name + " cleaned");
 					if (destination === "permanent") {
