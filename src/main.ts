@@ -14,6 +14,7 @@ import {
 	DEFAULT_SETTINGS,
 	FileCleanerSettingTab,
 } from "./settings";
+import { t } from "./translations/helper";
 
 export default class FileCleanerPlugin extends Plugin {
 	plugin: FileCleanerPlugin;
@@ -48,9 +49,9 @@ export default class FileCleanerPlugin extends Plugin {
 						await this.app.vault.trash(file, false);
 					}
 				}
-				new Notice("Cleanup successful");
+				new Notice(t("doCleanNotice"));
 			} else {
-				new Notice("No file to clean");
+				new Notice(t("doNotCleanNotice"));
 			}
 		});
 
