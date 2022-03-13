@@ -11,9 +11,9 @@ It can help you clean up empty files and unused attachments in the obsidian vaul
 -   Unused Attachments
     -   Support jpg, jpeg, png, gif, svg, pdf.
 -   Settings
-    -   Permanently delete (default)
     -   Move to system trash
     -   Move to Obsidian trash (.trash folder)
+    -   Permanently delete
 
 ### How to use
 

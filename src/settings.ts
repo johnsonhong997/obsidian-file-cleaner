@@ -18,7 +18,7 @@ export interface FileCleanerSettings {
 
 //定义默认设置
 export const DEFAULT_SETTINGS: FileCleanerSettings = {
-	destination: "permanent",
+	destination: "system",
 };
 
 //设置选项卡
@@ -39,9 +39,9 @@ export class FileCleanerSettingTab extends PluginSettingTab {
 			.setDesc(t("cleanedFilesDesc"))
 			.addDropdown((dropdown) =>
 				dropdown
-					.addOption("permanent", t("deleteOption"))
 					.addOption("system", t("systemTrashOption"))
 					.addOption("obsidian", t("obsidianTrashOption"))
+					.addOption("permanent", t("deleteOption"))
 					.setValue(this.plugin.settings.destination)
 					.onChange((value) => {
 						this.plugin.settings.destination = value;
