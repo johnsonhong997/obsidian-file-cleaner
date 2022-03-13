@@ -13,3 +13,7 @@ It can help you clean up empty files and unused attachments in the obsidian vaul
 ### How to use
 
 Click the ribbon icon of "File Cleaner".
+
+### Known issue
+
+Attachments used in [Admonition](https://github.com/valentine195/obsidian-admonition) code blocks are not recognized
