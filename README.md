@@ -8,7 +8,7 @@ It can help you clean up empty files and unused attachments in the obsidian vaul
 
 -   Empty Files
     -   Files with a size of 0 bytes.
--   Unsed Attachments
+-   Unused Attachments
     -   Support jpg, jpeg, png, gif, svg, pdf.
 -   Settings
     -   Permanently delete (default)
