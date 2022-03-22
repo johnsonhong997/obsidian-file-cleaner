@@ -9,6 +9,8 @@ import {
 	Setting,
 	TFile,
 } from "obsidian";
+import { FileCleanerSettings } from "./settings";
+import { t } from "./translations/helper";
 
 export const getEmptyMdFiles = (app: App) => {
 	// 获取Markdown文件
@@ -56,4 +58,37 @@ export const getUnusedAttachments = (app: App) => {
 	);
 
 	return unusedAttachments;
+};
+
+export const getExcludedFiles = async (
+	app: App,
+	setting: FileCleanerSettings
+) => {
+	// 待完成
+};
+
+export const clearFiles = async (app: App, setting: FileCleanerSettings) => {
+	// 获取清理文件
+	let emptyMdFiles = getEmptyMdFiles(app);
+	let unusedAttachments = getUnusedAttachments(app);
+	let cleanFiles: TFile[] = [...emptyMdFiles, ...unusedAttachments];
+
+	// 执行清理
+	let len = cleanFiles.length;
+	if (len > 0) {
+		let destination = setting.destination;
+		for (let file of cleanFiles) {
+			console.log(file.name + " cleaned");
+			if (destination === "permanent") {
+				await app.vault.delete(file);
+			} else if (destination === "system") {
+				await app.vault.trash(file, true);
+			} else if (destination === "obsidian") {
+				await app.vault.trash(file, false);
+			}
+		}
+		new Notice(t("Clean successful"));
+	} else {
+		new Notice(t("No file to clean"));
+	}
 };

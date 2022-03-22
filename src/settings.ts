@@ -8,7 +8,7 @@ import {
 	PluginSettingTab,
 	Setting,
 } from "obsidian";
-import FileCleanerPlugin from "./main";
+import FileCleanerPlugin from ".";
 import { t } from "./translations/helper";
 
 //定义设置接口
@@ -34,14 +34,19 @@ export class FileCleanerSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		this.containerEl.empty();
 
+		this.containerEl.createEl("h1", { text: t("Regular Options") });
+
 		new Setting(containerEl)
-			.setName(t("cleanedFilesName"))
-			.setDesc(t("cleanedFilesDesc"))
+			.setName(t("Cleaned files"))
+			.setDesc(t("What do you want to do with cleaned files?"))
 			.addDropdown((dropdown) =>
 				dropdown
-					.addOption("system", t("systemTrashOption"))
-					.addOption("obsidian", t("obsidianTrashOption"))
-					.addOption("permanent", t("deleteOption"))
+					.addOption("system", t("Move to system trash"))
+					.addOption(
+						"obsidian",
+						t("Move to Obsidian trash (.trash folder)")
+					)
+					.addOption("permanent", t("Permanently delete"))
 					.setValue(this.plugin.settings.destination)
 					.onChange((value) => {
 						this.plugin.settings.destination = value;
