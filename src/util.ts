@@ -12,22 +12,21 @@ import {
 import { FileCleanerSettings } from "./settings";
 import { t } from "./translations/helper";
 
-export const getEmptyMdFiles = (app: App) => {
-	// 获取Markdown文件
-	let mdFiles = app.vault.getMarkdownFiles();
-
+export const clearFiles = async (app: App, setting: FileCleanerSettings) => {
 	// 获取空白Markdown文件
+	let mdFiles = app.vault.getMarkdownFiles();
 	let emptyMdFiles: TFile[] = [];
+	let emptyRegex = /\S/;
 	for (let file of mdFiles) {
+		let content = await app.vault.cachedRead(file);
 		if (file.stat.size === 0) {
+			emptyMdFiles.push(file);
+		} else if (!emptyRegex.test(content)) {
 			emptyMdFiles.push(file);
 		}
 	}
-	return emptyMdFiles;
-};
 
-export const getUnusedAttachments = (app: App) => {
-	// 获取附件
+	// 获取未使用附件
 	let files = app.vault.getFiles();
 	const attachmentRegex = /(.jpg|.jpeg|.png|.gif|.svg|.pdf)$/i;
 	let attachments: TFile[] = [];
@@ -37,7 +36,6 @@ export const getUnusedAttachments = (app: App) => {
 		}
 	}
 
-	// 获取已使用附件
 	let usedAttachments: any = [];
 	let resolvedLinks = app.metadataCache.resolvedLinks;
 	if (resolvedLinks) {
@@ -52,25 +50,11 @@ export const getUnusedAttachments = (app: App) => {
 		}
 	}
 
-	// 获取未使用附件
 	let unusedAttachments = attachments.filter(
 		(file) => !usedAttachments.includes(file)
 	);
 
-	return unusedAttachments;
-};
-
-export const getExcludedFiles = async (
-	app: App,
-	setting: FileCleanerSettings
-) => {
-	// 待完成
-};
-
-export const clearFiles = async (app: App, setting: FileCleanerSettings) => {
-	// 获取清理文件
-	let emptyMdFiles = getEmptyMdFiles(app);
-	let unusedAttachments = getUnusedAttachments(app);
+	// 获取清理文件列表
 	let cleanFiles: TFile[] = [...emptyMdFiles, ...unusedAttachments];
 
 	// 执行清理

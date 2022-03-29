@@ -14,7 +14,7 @@ import {
 	DEFAULT_SETTINGS,
 	FileCleanerSettingTab,
 } from "./settings";
-import { getEmptyMdFiles, getUnusedAttachments, clearFiles } from "./util";
+import { clearFiles } from "./util";
 import { t } from "./translations/helper";
 
 export default class FileCleanerPlugin extends Plugin {
