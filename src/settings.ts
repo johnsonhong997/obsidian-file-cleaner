@@ -14,11 +14,13 @@ import { t } from "./translations/helper";
 //定义设置接口
 export interface FileCleanerSettings {
 	destination: string;
+	excluded: string;
 }
 
 //定义默认设置
 export const DEFAULT_SETTINGS: FileCleanerSettings = {
 	destination: "system",
+	excluded: "",
 };
 
 //设置选项卡
@@ -50,6 +52,19 @@ export class FileCleanerSettingTab extends PluginSettingTab {
 					.setValue(this.plugin.settings.destination)
 					.onChange((value) => {
 						this.plugin.settings.destination = value;
+						this.plugin.saveSettings();
+					})
+			);
+
+		new Setting(containerEl)
+			.setName("excluded folders")
+			.setDesc("excluded folders")
+			.addTextArea((text) =>
+				text
+					.setPlaceholder("path")
+					.setValue(this.plugin.settings.excluded)
+					.onChange(async (value) => {
+						this.plugin.settings.excluded = value;
 						this.plugin.saveSettings();
 					})
 			);

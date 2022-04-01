@@ -54,8 +54,23 @@ export const clearFiles = async (app: App, setting: FileCleanerSettings) => {
 		(file) => !usedAttachments.includes(file)
 	);
 
-	// 获取清理文件列表
+	// 排除文件
 	let cleanFiles: TFile[] = [...emptyMdFiles, ...unusedAttachments];
+	let excludedFolders = setting.excluded;
+	let excludedFoldersSet = new Set(
+		excludedFolders.split(/\n/).map((folderPath) => {
+			return folderPath.trim();
+		})
+	);
+	excludedFoldersSet.delete("");
+	for (let excludedFolder of excludedFoldersSet) {
+		let pathRegex = new RegExp("^" + excludedFolder);
+		console.log(pathRegex);
+		console.log(excludedFolder);
+	}
+	//
+	// 上次完成到这里，已筛选出路径
+	//
 
 	// 执行清理
 	let len = cleanFiles.length;
