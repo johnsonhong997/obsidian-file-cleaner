@@ -14,7 +14,7 @@ import {
 	DEFAULT_SETTINGS,
 	FileCleanerSettingTab,
 } from "./settings";
-import { clearFiles } from "./util";
+import { cleanFiles } from "./util";
 import { t } from "./translations/helper";
 
 export default class FileCleanerPlugin extends Plugin {
@@ -24,22 +24,22 @@ export default class FileCleanerPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-		this.addRibbonIcon("trash", t("Clear files"), (evt: MouseEvent) => {
-			clearFiles(this.app, this.settings);
+		this.addRibbonIcon("trash", t("Clean files"), (evt: MouseEvent) => {
+			cleanFiles(this.app, this.settings);
 		});
 
 		this.addCommand({
 			id: "clean-files",
-			name: t("Clear files"),
+			name: t("Clean files"),
 			callback: () => {
-				clearFiles(this.app, this.settings);
+				cleanFiles(this.app, this.settings);
 			},
 		});
 
 		this.addSettingTab(new FileCleanerSettingTab(this.app, this));
 	}
 
-	onunload() {}
+	onunload() { }
 
 	async loadSettings() {
 		this.settings = Object.assign(

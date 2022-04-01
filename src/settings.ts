@@ -57,11 +57,10 @@ export class FileCleanerSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("excluded folders")
-			.setDesc("excluded folders")
+			.setName(t("Excluded Folders"))
+			.setDesc(t("Files in excluded folders will not be cleaned up. Paths are case-sensitive, each path is separated by a newline. Example: folder/subfolder"))
 			.addTextArea((text) =>
 				text
-					.setPlaceholder("path")
 					.setValue(this.plugin.settings.excluded)
 					.onChange(async (value) => {
 						this.plugin.settings.excluded = value;

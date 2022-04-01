@@ -9,10 +9,11 @@ import {
 	Setting,
 	TFile,
 } from "obsidian";
+import * as path from "path";
 import { FileCleanerSettings } from "./settings";
 import { t } from "./translations/helper";
 
-export const clearFiles = async (app: App, setting: FileCleanerSettings) => {
+export const cleanFiles = async (app: App, setting: FileCleanerSettings) => {
 	// 获取空白Markdown文件
 	let mdFiles = app.vault.getMarkdownFiles();
 	let emptyMdFiles: TFile[] = [];
@@ -54,25 +55,27 @@ export const clearFiles = async (app: App, setting: FileCleanerSettings) => {
 		(file) => !usedAttachments.includes(file)
 	);
 
-	// 排除文件
-	let cleanFiles: TFile[] = [...emptyMdFiles, ...unusedAttachments];
+	// 获取排除文件
+	let excludedFiles: TFile[] = []
+	let cleanFiles = emptyMdFiles.concat(unusedAttachments)
 	let excludedFolders = setting.excluded;
-	let excludedFoldersSet = new Set(
+	let excludedFoldersCleaned = new Set(
 		excludedFolders.split(/\n/).map((folderPath) => {
 			return folderPath.trim();
 		})
 	);
-	excludedFoldersSet.delete("");
-	for (let excludedFolder of excludedFoldersSet) {
-		let pathRegex = new RegExp("^" + excludedFolder);
-		console.log(pathRegex);
-		console.log(excludedFolder);
+	excludedFoldersCleaned.delete("");
+	for (let excludedFolder of excludedFoldersCleaned) {
+		let pathRegex = new RegExp("^" + excludedFolder + "/");
+		for (let file of cleanFiles) {
+			if (pathRegex.test(file.path)) {
+				excludedFiles.push(file)
+			}
+		}
 	}
-	//
-	// 上次完成到这里，已筛选出路径
-	//
 
 	// 执行清理
+	cleanFiles = cleanFiles.concat(excludedFiles).filter(v => !cleanFiles.includes(v) || !excludedFiles.includes(v))
 	let len = cleanFiles.length;
 	if (len > 0) {
 		let destination = setting.destination;
