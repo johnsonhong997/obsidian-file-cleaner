@@ -29,7 +29,7 @@ export const cleanFiles = async (app: App, setting: FileCleanerSettings) => {
 
 	// 获取未使用附件
 	let files = app.vault.getFiles();
-	const attachmentRegex = /(.jpg|.jpeg|.png|.gif|.svg|.pdf)$/i;
+	const attachmentRegex = /(.jpg|.jpeg|.png|.gif|.svg|.pdf|.mp4)$/i;
 	let attachments: TFile[] = [];
 	for (let file of files) {
 		if (file.name.match(attachmentRegex)) {
