@@ -9,7 +9,7 @@ It can help you clean up empty files and unused attachments in the obsidian vaul
     -   Files with a size of 0 bytes.
     -   Files with only spaces and line breaks
 -   Unused Attachments
-    -   Support jpg, jpeg, png, gif, svg, pdf.
+    -   Support jpg, jpeg, png, gif, svg, pdf, mp4.
 -   Settings
     -   Move to system trash
     -   Move to Obsidian trash (.trash folder)
