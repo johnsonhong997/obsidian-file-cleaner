@@ -1,55 +1,51 @@
 import {
-	App,
-	Editor,
-	MarkdownView,
-	Modal,
-	Notice,
-	Plugin,
-	PluginSettingTab,
-	Setting,
-	TFile,
+  App,
+  Editor,
+  MarkdownView,
+  Modal,
+  Notice,
+  Plugin,
+  PluginSettingTab,
+  Setting,
+  TFile,
 } from "obsidian";
 import {
-	FileCleanerSettings,
-	DEFAULT_SETTINGS,
-	FileCleanerSettingTab,
+  FileCleanerSettings,
+  DEFAULT_SETTINGS,
+  FileCleanerSettingTab,
 } from "./settings";
 import { cleanFiles } from "./util";
 import { t } from "./translations/helper";
 
 export default class FileCleanerPlugin extends Plugin {
-	plugin: FileCleanerPlugin;
-	settings: FileCleanerSettings;
+  plugin: FileCleanerPlugin;
+  settings: FileCleanerSettings;
 
-	async onload() {
-		await this.loadSettings();
+  async onload() {
+    await this.loadSettings();
 
-		this.addRibbonIcon("trash", t("Clean files"), (evt: MouseEvent) => {
-			cleanFiles(this.app, this.settings);
-		});
+    this.addRibbonIcon("trash", t("Clean files"), (evt: MouseEvent) => {
+      cleanFiles(this.app, this.settings);
+    });
 
-		this.addCommand({
-			id: "clean-files",
-			name: t("Clean files"),
-			callback: () => {
-				cleanFiles(this.app, this.settings);
-			},
-		});
+    this.addCommand({
+      id: "clean-files",
+      name: t("Clean files"),
+      callback: () => {
+        cleanFiles(this.app, this.settings);
+      },
+    });
 
-		this.addSettingTab(new FileCleanerSettingTab(this.app, this));
-	}
+    this.addSettingTab(new FileCleanerSettingTab(this.app, this));
+  }
 
-	onunload() { }
+  onunload() {}
 
-	async loadSettings() {
-		this.settings = Object.assign(
-			{},
-			DEFAULT_SETTINGS,
-			await this.loadData()
-		);
-	}
+  async loadSettings() {
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+  }
 
-	async saveSettings() {
-		await this.saveData(this.settings);
-	}
+  async saveSettings() {
+    await this.saveData(this.settings);
+  }
 }
