@@ -1,14 +1,4 @@
-import {
-  App,
-  Editor,
-  MarkdownView,
-  Modal,
-  Notice,
-  Plugin,
-  PluginSettingTab,
-  Setting,
-  TFile,
-} from "obsidian";
+import { Plugin } from "obsidian";
 import {
   FileCleanerSettings,
   DEFAULT_SETTINGS,

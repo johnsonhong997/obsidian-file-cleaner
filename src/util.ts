@@ -1,15 +1,4 @@
-import {
-  App,
-  Editor,
-  MarkdownView,
-  Modal,
-  Notice,
-  Plugin,
-  PluginSettingTab,
-  Setting,
-  TFile,
-} from "obsidian";
-import * as path from "path";
+import { App, Notice, TFile } from "obsidian";
 import { FileCleanerSettings } from "./settings";
 import { t } from "./translations/helper";
 

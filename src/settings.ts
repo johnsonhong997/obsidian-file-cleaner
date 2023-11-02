@@ -1,13 +1,4 @@
-import {
-  App,
-  Editor,
-  MarkdownView,
-  Modal,
-  Notice,
-  Plugin,
-  PluginSettingTab,
-  Setting,
-} from "obsidian";
+import { App, PluginSettingTab, Setting } from "obsidian";
 import FileCleanerPlugin from ".";
 import { t } from "./translations/helper";
 
