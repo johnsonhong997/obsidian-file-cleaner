@@ -27,7 +27,7 @@ export class FileCleanerSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     this.containerEl.empty();
 
-    this.containerEl.createEl("h1", {
+    this.containerEl.createEl("h3", {
       text: translate().Settings.RegularOptions.Header,
     });
 
