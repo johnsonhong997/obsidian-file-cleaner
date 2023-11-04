@@ -3,6 +3,24 @@ import { FileCleanerSettings } from "./settings";
 import translate from "./i18n";
 import { Deletion } from "./enums";
 
+async function removeFile(
+  file: TFile,
+  app: App,
+  settings: FileCleanerSettings,
+) {
+  switch (settings.deletionDestination) {
+    case Deletion.Permanent:
+      await app.vault.delete(file);
+      break;
+    case Deletion.SystemTrash:
+      await app.vault.trash(file, true);
+      break;
+    case Deletion.ObsidianTrash:
+      await app.vault.trash(file, false);
+      break;
+  }
+}
+
 export const cleanFiles = async (app: App, setting: FileCleanerSettings) => {
   // 获取空白Markdown文件
   const mdFiles = app.vault.getMarkdownFiles();
@@ -72,18 +90,7 @@ export const cleanFiles = async (app: App, setting: FileCleanerSettings) => {
   if (len > 0) {
     for (const file of cleanFiles) {
       console.log(file.name + " cleaned");
-
-      switch (setting.deletionDestination) {
-        case Deletion.Permanent:
-          await app.vault.delete(file);
-          break;
-        case Deletion.SystemTrash:
-          await app.vault.trash(file, true);
-          break;
-        case Deletion.ObsidianTrash:
-          await app.vault.trash(file, false);
-          break;
-      }
+      removeFile(file, app, setting);
     }
     new Notice(translate().Notifications.CleanSuccessful);
   } else {
