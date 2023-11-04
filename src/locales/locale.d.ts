@@ -17,6 +17,7 @@ export interface Locale {
       ExcludedFolders: {
         Label: string;
         Description: string;
+        Placeholder: string;
       };
     };
 

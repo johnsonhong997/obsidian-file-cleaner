@@ -68,12 +68,15 @@ export class FileCleanerSettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName(translate().Settings.RegularOptions.ExcludedFolders.Label)
       .setDesc(translate().Settings.RegularOptions.ExcludedFolders.Description)
-      .addTextArea((text) =>
+      .addTextArea((text) => {
         text.setValue(this.plugin.settings.excluded).onChange(async (value) => {
           this.plugin.settings.excluded = value;
           this.plugin.saveSettings();
-        }),
-      );
+        });
+        text.setPlaceholder(
+          translate().Settings.RegularOptions.ExcludedFolders.Placeholder,
+        );
+      });
 
     this.containerEl.createEl("h3", {
       text: translate().Settings.DangerZone.Header,

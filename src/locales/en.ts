@@ -21,8 +21,8 @@ const enUS: Locale = {
         Label: "Excluded Folders",
         Description: `
           Files in excluded folders will not be cleaned up.
-          Paths are case-sensitive, each path is separated by a newline.
-          Example: folder/subfolder`,
+          Paths are case-sensitive, each path is separated by a newline.`,
+        Placeholder: "Example:\nfolder/subfolder\nfolder2/subfolder2",
       },
     },
 
