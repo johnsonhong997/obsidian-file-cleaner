@@ -108,13 +108,18 @@ export class FileCleanerSettingTab extends PluginSettingTab {
       .setDesc(translate().Settings.RegularOptions.Attachments.Description)
       .addTextArea((text) => {
         text
-          .setValue(this.plugin.settings.attachmentExtensions.join(", "))
+          .setValue(
+            this.plugin.settings.attachmentExtensions
+              .map((ext) => `.${ext}`)
+              .join(", "),
+          )
           .onChange(async (value) => {
             this.plugin.settings.attachmentExtensions = value
               .split(",")
               .map((ext) => ext.trim())
               .filter((ext) => ext.startsWith(".") && ext.length > 1)
-              .filter((ext) => ext !== "");
+              .filter((ext) => ext !== "")
+              .map((ext) => ext.replace(/^\./, ""));
 
             this.plugin.saveSettings();
           });
