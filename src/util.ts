@@ -1,6 +1,7 @@
 import { App, Notice, TFile } from "obsidian";
 import { FileCleanerSettings } from "./settings";
 import translate from "./i18n";
+import { Deletion } from "./enums";
 
 export const cleanFiles = async (app: App, setting: FileCleanerSettings) => {
   // 获取空白Markdown文件
@@ -69,15 +70,19 @@ export const cleanFiles = async (app: App, setting: FileCleanerSettings) => {
     .filter((v) => !cleanFiles.includes(v) || !excludedFiles.includes(v));
   const len = cleanFiles.length;
   if (len > 0) {
-    const destination = setting.destination;
     for (const file of cleanFiles) {
       console.log(file.name + " cleaned");
-      if (destination === "permanent") {
-        await app.vault.delete(file);
-      } else if (destination === "system") {
-        await app.vault.trash(file, true);
-      } else if (destination === "obsidian") {
-        await app.vault.trash(file, false);
+
+      switch (setting.deletionDestination) {
+        case Deletion.Permanent:
+          await app.vault.delete(file);
+          break;
+        case Deletion.SystemTrash:
+          await app.vault.trash(file, true);
+          break;
+        case Deletion.ObsidianTrash:
+          await app.vault.trash(file, false);
+          break;
       }
     }
     new Notice(translate().Notifications.CleanSuccessful);

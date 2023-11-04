@@ -8,16 +8,17 @@ import {
 } from "obsidian";
 import FileCleanerPlugin from ".";
 import translate from "./i18n";
+import { Deletion } from "./enums";
 
 //定义设置接口
 export interface FileCleanerSettings {
-  destination: string;
+  deletionDestination: Deletion;
   excludedFolders: string[];
 }
 
 //定义默认设置
 export const DEFAULT_SETTINGS: FileCleanerSettings = {
-  destination: "system",
+  deletionDestination: Deletion.SystemTrash,
   excludedFolders: [],
 };
 
@@ -58,9 +59,23 @@ export class FileCleanerSettingTab extends PluginSettingTab {
             translate().Settings.RegularOptions.CleanedFiles.Options
               .PermanentDelete,
           )
-          .setValue(this.plugin.settings.destination)
+          .setValue(this.plugin.settings.deletionDestination)
           .onChange((value) => {
-            this.plugin.settings.destination = value;
+            switch (value) {
+              case Deletion.Permanent:
+                this.plugin.settings.deletionDestination = Deletion.Permanent;
+                break;
+
+              case Deletion.ObsidianTrash:
+                this.plugin.settings.deletionDestination =
+                  Deletion.ObsidianTrash;
+                break;
+
+              default:
+              case Deletion.SystemTrash:
+                this.plugin.settings.deletionDestination = Deletion.SystemTrash;
+                break;
+            }
             this.plugin.saveSettings();
           }),
       );
