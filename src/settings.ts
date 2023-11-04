@@ -76,6 +76,8 @@ export class FileCleanerSettingTab extends PluginSettingTab {
         text.setPlaceholder(
           translate().Settings.RegularOptions.ExcludedFolders.Placeholder,
         );
+        text.inputEl.rows = 8;
+        text.inputEl.cols = 30;
       });
 
     this.containerEl.createEl("h3", {
