@@ -14,12 +14,14 @@ import { Deletion } from "./enums";
 export interface FileCleanerSettings {
   deletionDestination: Deletion;
   excludedFolders: string[];
+  attachmentExtensions: string[];
 }
 
 //定义默认设置
 export const DEFAULT_SETTINGS: FileCleanerSettings = {
   deletionDestination: Deletion.SystemTrash,
   excludedFolders: [],
+  attachmentExtensions: [],
 };
 
 //设置选项卡
@@ -98,6 +100,28 @@ export class FileCleanerSettingTab extends PluginSettingTab {
           translate().Settings.RegularOptions.ExcludedFolders.Placeholder,
         );
         text.inputEl.rows = 8;
+        text.inputEl.cols = 30;
+      });
+
+    new Setting(containerEl)
+      .setName(translate().Settings.RegularOptions.Attachments.Label)
+      .setDesc(translate().Settings.RegularOptions.Attachments.Description)
+      .addTextArea((text) => {
+        text
+          .setValue(this.plugin.settings.attachmentExtensions.join(", "))
+          .onChange(async (value) => {
+            this.plugin.settings.attachmentExtensions = value
+              .split(",")
+              .map((ext) => ext.trim())
+              .filter((ext) => ext.startsWith(".") && ext.length > 1)
+              .filter((ext) => ext !== "");
+
+            this.plugin.saveSettings();
+          });
+        text.setPlaceholder(
+          translate().Settings.RegularOptions.Attachments.Placeholder,
+        );
+        text.inputEl.rows = 3;
         text.inputEl.cols = 30;
       });
 

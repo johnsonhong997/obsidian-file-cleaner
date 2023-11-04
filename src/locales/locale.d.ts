@@ -19,6 +19,12 @@ export interface Locale {
         Description: string;
         Placeholder: string;
       };
+
+      Attachments: {
+        Label: string;
+        Description: string;
+        Placeholder: string;
+      };
     };
 
     DangerZone: {

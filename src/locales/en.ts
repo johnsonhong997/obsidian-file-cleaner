@@ -25,6 +25,13 @@ const enUS: Locale = {
           One folder per line.`,
         Placeholder: "Example:\nfolder/subfolder\nfolder2/subfolder2",
       },
+
+      Attachments: {
+        Label: "Attachment extensions",
+        Description:
+          "Unused attachements which should be cleaned up, comma-separated.",
+        Placeholder: "Example: .jpg, .png, .pdf",
+      },
     },
 
     DangerZone: {
