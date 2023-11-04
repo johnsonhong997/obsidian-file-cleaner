@@ -47,5 +47,6 @@ export interface Locale {
   Notifications: {
     CleanSuccessful: string;
     NoFileToClean: string;
+    SettingsReset: string;
   };
 }

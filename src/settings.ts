@@ -1,4 +1,11 @@
-import { App, PluginSettingTab, Setting } from "obsidian";
+import {
+  App,
+  ButtonComponent,
+  Modal,
+  Notice,
+  PluginSettingTab,
+  Setting,
+} from "obsidian";
 import FileCleanerPlugin from ".";
 import translate from "./i18n";
 
@@ -67,5 +74,45 @@ export class FileCleanerSettingTab extends PluginSettingTab {
           this.plugin.saveSettings();
         }),
       );
+
+    this.containerEl.createEl("h3", {
+      text: translate().Settings.DangerZone.Header,
+    });
+
+    new Setting(containerEl)
+      .setName(translate().Settings.DangerZone.ResetSettings.Label)
+      .setDesc(translate().Settings.DangerZone.ResetSettings.Description)
+      .addButton((button) => {
+        button
+          .setWarning()
+          .setButtonText(translate().Settings.DangerZone.ResetSettings.Button)
+          .onClick(() => {
+            const modal = new Modal(this.app);
+
+            modal.contentEl.createEl("h3", {
+              text: translate().Modals.ResetSettings.Text,
+            });
+
+            new ButtonComponent(modal.contentEl)
+              .setButtonText(translate().Modals.ButtonNo)
+              .onClick(() => {
+                modal.close();
+              }).buttonEl.style.marginRight = "1em";
+
+            new ButtonComponent(modal.contentEl)
+              .setButtonText(translate().Modals.ButtonYes)
+              .setWarning()
+              .onClick(() => {
+                this.plugin.settings = DEFAULT_SETTINGS;
+                this.plugin.saveSettings();
+
+                new Notice(translate().Notifications.SettingsReset);
+
+                modal.close();
+              });
+
+            modal.open();
+          });
+      });
   }
 }

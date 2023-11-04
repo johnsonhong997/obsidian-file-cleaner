@@ -52,6 +52,7 @@ const enUS: Locale = {
   Notifications: {
     CleanSuccessful: "Clean successful",
     NoFileToClean: "No file to clean",
+    SettingsReset: "File Cleaner: Setting reset",
   },
 };
 
