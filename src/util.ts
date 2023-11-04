@@ -47,9 +47,9 @@ export const cleanFiles = async (app: App, setting: FileCleanerSettings) => {
   // 获取排除文件
   const excludedFiles: TFile[] = [];
   let cleanFiles = emptyMdFiles.concat(unusedAttachments);
-  const excludedFolders = setting.excluded;
+  const excludedFolders = setting.excludedFolders;
   const excludedFoldersCleaned = new Set(
-    excludedFolders.split(/\n/).map((folderPath) => {
+    excludedFolders.map((folderPath) => {
       return folderPath.trim();
     }),
   );

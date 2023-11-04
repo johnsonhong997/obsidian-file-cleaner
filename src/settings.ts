@@ -12,13 +12,13 @@ import translate from "./i18n";
 //定义设置接口
 export interface FileCleanerSettings {
   destination: string;
-  excluded: string;
+  excludedFolders: string[];
 }
 
 //定义默认设置
 export const DEFAULT_SETTINGS: FileCleanerSettings = {
   destination: "system",
-  excluded: "",
+  excludedFolders: [],
 };
 
 //设置选项卡
@@ -69,10 +69,16 @@ export class FileCleanerSettingTab extends PluginSettingTab {
       .setName(translate().Settings.RegularOptions.ExcludedFolders.Label)
       .setDesc(translate().Settings.RegularOptions.ExcludedFolders.Description)
       .addTextArea((text) => {
-        text.setValue(this.plugin.settings.excluded).onChange(async (value) => {
-          this.plugin.settings.excluded = value;
-          this.plugin.saveSettings();
-        });
+        text
+          .setValue(this.plugin.settings.excludedFolders.join("\n"))
+          .onChange(async (value) => {
+            this.plugin.settings.excludedFolders = value
+              .split(/\n/)
+              .map((ext) => ext.trim())
+              .filter((ext) => ext !== "");
+
+            this.plugin.saveSettings();
+          });
         text.setPlaceholder(
           translate().Settings.RegularOptions.ExcludedFolders.Placeholder,
         );
