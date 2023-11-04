@@ -1,6 +1,6 @@
 import { App, Notice, TFile } from "obsidian";
 import { FileCleanerSettings } from "./settings";
-import { t } from "./translations/helper";
+import translate from "./i18n";
 
 export const cleanFiles = async (app: App, setting: FileCleanerSettings) => {
   // 获取空白Markdown文件
@@ -80,8 +80,8 @@ export const cleanFiles = async (app: App, setting: FileCleanerSettings) => {
         await app.vault.trash(file, false);
       }
     }
-    new Notice(t("Clean successful"));
+    new Notice(translate().Notifications.CleanSuccessful);
   } else {
-    new Notice(t("No file to clean"));
+    new Notice(translate().Notifications.NoFileToClean);
   }
 };

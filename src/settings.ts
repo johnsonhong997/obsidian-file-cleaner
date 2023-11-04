@@ -1,6 +1,6 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
 import FileCleanerPlugin from ".";
-import { t } from "./translations/helper";
+import translate from "./i18n";
 
 //定义设置接口
 export interface FileCleanerSettings {
@@ -27,16 +27,30 @@ export class FileCleanerSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     this.containerEl.empty();
 
-    this.containerEl.createEl("h1", { text: t("Regular Options") });
+    this.containerEl.createEl("h1", {
+      text: translate().Settings.RegularOptions.Header,
+    });
 
     new Setting(containerEl)
-      .setName(t("Cleaned files"))
-      .setDesc(t("What do you want to do with cleaned files?"))
+      .setName(translate().Settings.RegularOptions.CleanedFiles.Label)
+      .setDesc(translate().Settings.RegularOptions.CleanedFiles.Description)
       .addDropdown((dropdown) =>
         dropdown
-          .addOption("system", t("Move to system trash"))
-          .addOption("obsidian", t("Move to Obsidian trash (.trash folder)"))
-          .addOption("permanent", t("Permanently delete"))
+          .addOption(
+            "system",
+            translate().Settings.RegularOptions.CleanedFiles.Options
+              .MoveToSystemTrash,
+          )
+          .addOption(
+            "obsidian",
+            translate().Settings.RegularOptions.CleanedFiles.Options
+              .MoveToObsidianTrash,
+          )
+          .addOption(
+            "permanent",
+            translate().Settings.RegularOptions.CleanedFiles.Options
+              .PermanentDelete,
+          )
           .setValue(this.plugin.settings.destination)
           .onChange((value) => {
             this.plugin.settings.destination = value;
@@ -45,12 +59,8 @@ export class FileCleanerSettingTab extends PluginSettingTab {
       );
 
     new Setting(containerEl)
-      .setName(t("Excluded Folders"))
-      .setDesc(
-        t(
-          "Files in excluded folders will not be cleaned up. Paths are case-sensitive, each path is separated by a newline. Example: folder/subfolder",
-        ),
-      )
+      .setName(translate().Settings.RegularOptions.ExcludedFolders.Label)
+      .setDesc(translate().Settings.RegularOptions.ExcludedFolders.Description)
       .addTextArea((text) =>
         text.setValue(this.plugin.settings.excluded).onChange(async (value) => {
           this.plugin.settings.excluded = value;
