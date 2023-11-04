@@ -7,8 +7,8 @@ const enUS: Locale = {
       Header: "Regular Options",
 
       CleanedFiles: {
-        Label: "Cleaned files",
-        Description: "What do you want to do with cleaned files?",
+        Label: "Deleted files",
+        Description: "What happens to a file after it's deleted.",
 
         Options: {
           MoveToSystemTrash: "Move to system trash",
@@ -20,8 +20,9 @@ const enUS: Locale = {
       ExcludedFolders: {
         Label: "Excluded Folders",
         Description: `
-          Files in excluded folders will not be cleaned up.
-          Paths are case-sensitive, each path is separated by a newline.`,
+          Folders that should be excluded during cleanup.
+          Paths are case-sensitive.
+          One folder per line.`,
         Placeholder: "Example:\nfolder/subfolder\nfolder2/subfolder2",
       },
     },
