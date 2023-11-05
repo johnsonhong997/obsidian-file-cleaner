@@ -24,7 +24,7 @@ async function removeFile(
 export async function runCleanup(app: App, settings: FileCleanerSettings) {
   const excludedFoldersRegex = RegExp(`^${settings.excludedFolders.join("|")}`);
   const allowedExtensions = RegExp(
-    `md|${settings.attachmentExtensions.join("|")}`,
+    `${["md", ...settings.attachmentExtensions].join("|")}`,
   );
   const inUseAttachments = Object.entries(app.metadataCache.resolvedLinks)
     .map(([parent, child]) => Object.keys(child))
