@@ -4,13 +4,13 @@ import translate from "./i18n";
 interface ConfirmationModalProps {
   text: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onConfirm: any | undefined;
+  onConfirm?: any;
 }
 export function ConfirmationModal({ text, onConfirm }: ConfirmationModalProps) {
   const modal = new Modal(this.app);
 
   modal.contentEl.createEl("p", {
-    text: text,
+    text: document.createRange().createContextualFragment(text),
   });
 
   new ButtonComponent(modal.contentEl)
@@ -23,7 +23,7 @@ export function ConfirmationModal({ text, onConfirm }: ConfirmationModalProps) {
     .setButtonText(translate().Modals.ButtonYes)
     .setWarning()
     .onClick(() => {
-      onConfirm();
+      onConfirm?.();
       modal.close();
     });
 

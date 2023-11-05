@@ -8,12 +8,14 @@ export interface FileCleanerSettings {
   deletionDestination: Deletion;
   excludedFolders: string[];
   attachmentExtensions: string[];
+  deletionConfirmation: boolean;
 }
 
 export const DEFAULT_SETTINGS: FileCleanerSettings = {
   deletionDestination: Deletion.SystemTrash,
   excludedFolders: [],
   attachmentExtensions: [],
+  deletionConfirmation: true,
 };
 
 export class FileCleanerSettingTab extends PluginSettingTab {
@@ -119,6 +121,18 @@ export class FileCleanerSettingTab extends PluginSettingTab {
         );
         text.inputEl.rows = 3;
         text.inputEl.cols = 30;
+      });
+
+    new Setting(containerEl)
+      .setName("Preview deleted files")
+      .setDesc("Show a confirmation box with list of files to be removed")
+      .addToggle((toggle) => {
+        toggle.setValue(this.plugin.settings.deletionConfirmation);
+
+        toggle.onChange((value) => {
+          this.plugin.settings.deletionConfirmation = value;
+          this.plugin.saveSettings();
+        });
       });
 
     this.containerEl.createEl("h3", {

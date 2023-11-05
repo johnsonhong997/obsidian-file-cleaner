@@ -42,6 +42,7 @@ export interface Locale {
     ResetSettings: {
       Text: string;
     };
+    DeletionConfirmation: string;
 
     ButtonYes: string;
     ButtonNo: string;
