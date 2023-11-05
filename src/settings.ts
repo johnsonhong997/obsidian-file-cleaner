@@ -4,21 +4,18 @@ import translate from "./i18n";
 import { Deletion } from "./enums";
 import { ConfirmationModal } from "./helpers";
 
-//定义设置接口
 export interface FileCleanerSettings {
   deletionDestination: Deletion;
   excludedFolders: string[];
   attachmentExtensions: string[];
 }
 
-//定义默认设置
 export const DEFAULT_SETTINGS: FileCleanerSettings = {
   deletionDestination: Deletion.SystemTrash,
   excludedFolders: [],
   attachmentExtensions: [],
 };
 
-//设置选项卡
 export class FileCleanerSettingTab extends PluginSettingTab {
   plugin: FileCleanerPlugin;
 
