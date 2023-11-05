@@ -46,9 +46,7 @@ const enUS: Locale = {
   },
 
   Modals: {
-    ResetSettings: {
-      Text: "Are you sure you want to reset the settings?",
-    },
+    ResetSettings: "Are you sure you want to reset the settings?",
     DeletionConfirmation: "The following files will be deleted",
 
     ButtonNo: "No",

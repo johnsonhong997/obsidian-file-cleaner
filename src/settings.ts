@@ -148,7 +148,7 @@ export class FileCleanerSettingTab extends PluginSettingTab {
           .setButtonText(translate().Settings.DangerZone.ResetSettings.Button)
           .onClick(() => {
             ConfirmationModal({
-              text: translate().Modals.ResetSettings.Text,
+              text: translate().Modals.ResetSettings,
               onConfirm: () => {
                 this.plugin.settings = DEFAULT_SETTINGS;
                 this.plugin.saveSettings();
