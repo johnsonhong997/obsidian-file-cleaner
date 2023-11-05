@@ -1,14 +1,8 @@
-import {
-  App,
-  ButtonComponent,
-  Modal,
-  Notice,
-  PluginSettingTab,
-  Setting,
-} from "obsidian";
+import { App, Notice, PluginSettingTab, Setting } from "obsidian";
 import FileCleanerPlugin from ".";
 import translate from "./i18n";
 import { Deletion } from "./enums";
+import { ConfirmationModal } from "./helpers";
 
 //定义设置接口
 export interface FileCleanerSettings {
@@ -142,31 +136,15 @@ export class FileCleanerSettingTab extends PluginSettingTab {
           .setWarning()
           .setButtonText(translate().Settings.DangerZone.ResetSettings.Button)
           .onClick(() => {
-            const modal = new Modal(this.app);
-
-            modal.contentEl.createEl("h3", {
+            ConfirmationModal({
               text: translate().Modals.ResetSettings.Text,
-            });
-
-            new ButtonComponent(modal.contentEl)
-              .setButtonText(translate().Modals.ButtonNo)
-              .onClick(() => {
-                modal.close();
-              }).buttonEl.style.marginRight = "1em";
-
-            new ButtonComponent(modal.contentEl)
-              .setButtonText(translate().Modals.ButtonYes)
-              .setWarning()
-              .onClick(() => {
+              onConfirm: () => {
                 this.plugin.settings = DEFAULT_SETTINGS;
                 this.plugin.saveSettings();
 
                 new Notice(translate().Notifications.SettingsReset);
-
-                modal.close();
-              });
-
-            modal.open();
+              },
+            });
           });
       });
   }
