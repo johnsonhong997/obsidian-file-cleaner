@@ -4,7 +4,7 @@ import {
   DEFAULT_SETTINGS,
   FileCleanerSettingTab,
 } from "./settings";
-import { cleanFiles } from "./util";
+import { runCleanup } from "./util";
 import translate from "./i18n";
 
 export default class FileCleanerPlugin extends Plugin {
@@ -18,7 +18,7 @@ export default class FileCleanerPlugin extends Plugin {
       "trash",
       translate().Buttons.CleanFiles,
       (evt: MouseEvent) => {
-        cleanFiles(this.app, this.settings);
+        runCleanup(this.app, this.settings);
       },
     );
 
@@ -26,7 +26,7 @@ export default class FileCleanerPlugin extends Plugin {
       id: "clean-files",
       name: translate().Buttons.CleanFiles,
       callback: () => {
-        cleanFiles(this.app, this.settings);
+        runCleanup(this.app, this.settings);
       },
     });
 

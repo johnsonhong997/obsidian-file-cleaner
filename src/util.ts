@@ -21,7 +21,7 @@ async function removeFile(
   }
 }
 
-export async function cleanFiles(app: App, settings: FileCleanerSettings) {
+export async function runCleanup(app: App, settings: FileCleanerSettings) {
   const excludedFoldersRegex = RegExp(`^${settings.excludedFolders.join("|")}`);
   const allowedExtensions = RegExp(
     `md|${settings.attachmentExtensions.join("|")}`,
